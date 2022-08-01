@@ -3,6 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import {SubmitHandler, useForm} from "react-hook-form";
+import Link from "@material-ui/core/Link";
+import {Link as RouterLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -25,7 +27,6 @@ export type ProfileFormProps = {
     username?: string;
     website?: string;
     usernameExists: boolean;
-    children?: React.ReactNode;
     className?: string;
     submitText?: string;
 };
@@ -36,7 +37,6 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
                                                             username,
                                                             website,
                                                             usernameExists,
-                                                            children,
                                                             className,
                                                             submitText
                                                         }) => {
@@ -45,9 +45,6 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
 
     return (
         <form className={`${classes.form} ${className}`} onSubmit={(e) => e.preventDefault()}>
-            <div>
-                {children}
-            </div>
             <div>
                 <TextField
                     {...register("username", {
@@ -90,6 +87,16 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
             >
                 {submitText ?? "Submit"}
             </Button>
+            <Link
+                underline="none"
+                to="/profile"
+                component={RouterLink}
+                color="inherit"
+            >
+                <Button>
+                    Cancel
+                </Button>
+            </Link>
         </form>
     );
 };
