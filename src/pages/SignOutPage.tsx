@@ -1,33 +1,26 @@
-import {Button, Link, makeStyles, Paper, Typography} from "@material-ui/core";
 import React, {useEffect} from "react";
 import {Link as RouterLink} from "react-router-dom";
 import {SupabaseClient} from "../api/SupabaseClient";
+import {Button, Link, Paper, styled, Typography} from "@mui/material";
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        margin: "4em 0 0 0",
-        padding: "6em 0 10em 0",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        "& > *": {
-            margin: "0.6em 0 0.6em 0"
-        }
+const StyledPaper = styled(Paper)({
+    margin: "5em 0 0 0",
+    padding: "6em 0 6em 0",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    "& > *": {
+        margin: "0.6em 0 0.6em 0"
     },
-    actionsContainer: {
-        margin: "1em 0 0 0",
-    },
-}));
+});
 
 export const SignOutPage = () => {
-    const classes = useStyles();
-
     useEffect(() => {
         SupabaseClient.auth.signOut().then(console.log);
     }, [])
 
     return (
-        <Paper variant="outlined" className={classes.paper}>
+        <StyledPaper>
             <Typography variant="h5" align="center">
                 You've been signed out
             </Typography>
@@ -37,13 +30,13 @@ export const SignOutPage = () => {
                 </Link>
                 <Link
                     underline="none"
-                    to="/signin"
+                    to="/sign-in"
                     component={RouterLink}
                     color="inherit"
                 >
                     <Button color="inherit">Sign In</Button>
                 </Link>
             </div>
-        </Paper>
+        </StyledPaper>
     );
 };

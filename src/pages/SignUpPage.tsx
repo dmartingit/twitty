@@ -1,34 +1,28 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-import {makeStyles} from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
 import {useForm} from "react-hook-form";
 import {SupabaseClient} from "../api/SupabaseClient";
-import {Paper, Typography} from "@material-ui/core";
-import Link from "@material-ui/core/Link";
 import {Link as RouterLink, useNavigate} from "react-router-dom";
+import {Button, Link, Paper, styled, TextField, Typography} from "@mui/material";
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const useStyles = makeStyles((theme) => ({
-    form: {
-        width: 300,
-        margin: "2em 0 0 0",
-        "& > div": {
-            margin: "0.6em 0 0.6em 0"
-        },
+const StyledPaper = styled(Paper)({
+    marginTop: "5em",
+    padding: "6em 0 6em 0",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+});
+
+const StyledForm = styled("form")({
+    width: 300,
+    margin: "2em 0 0 0",
+    "& > div": {
+        margin: "0.6em 0 0.6em 0"
     },
-    paper: {
-        margin: "4em 0 0 0",
-        padding: "6em 0 10em 0",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    },
-}));
+});
 
 export const SignUpPage = () => {
-    const classes = useStyles();
     const {register, handleSubmit, watch, formState: {errors}} = useForm();
     const password = watch("password");
     const navigate = useNavigate();
@@ -44,11 +38,11 @@ export const SignUpPage = () => {
     };
 
     return (
-        <Paper variant="outlined" className={classes.paper}>
+        <StyledPaper>
             <Typography variant="h5" align="center">
                 Sign up to Twitty
             </Typography>
-            <form className={classes.form} onSubmit={e => e.preventDefault()}>
+            <StyledForm onSubmit={e => e.preventDefault()}>
                 <div>
                     <TextField
                         {...register("email", {required: "Email is required", pattern: emailRegex})}
@@ -58,7 +52,6 @@ export const SignUpPage = () => {
                         label="Email"
                         type="email"
                         autoComplete="email"
-                        variant="outlined"
                         fullWidth
                     />
                 </div>
@@ -76,7 +69,6 @@ export const SignUpPage = () => {
                         label="Password"
                         type="password"
                         autoComplete="new-password"
-                        variant="outlined"
                         fullWidth
                     />
                 </div>
@@ -89,7 +81,6 @@ export const SignUpPage = () => {
                         label="Confirm Password"
                         type="password"
                         autoComplete="new-password"
-                        variant="outlined"
                         fullWidth
                     />
                 </div>
@@ -107,7 +98,7 @@ export const SignUpPage = () => {
                 </Button>
                 <Link
                     underline="none"
-                    to="/signin"
+                    to="/sign-in"
                     component={RouterLink}
                     color="inherit"
                 >
@@ -115,7 +106,7 @@ export const SignUpPage = () => {
                         Sign In
                     </Button>
                 </Link>
-            </form>
-        </Paper>
+            </StyledForm>
+        </StyledPaper>
     );
 };

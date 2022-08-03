@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler } from "react";
-import Button from "@material-ui/core/Button";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import {Button} from "@mui/material";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export type UploadButtonProps = {
     onUpload: ChangeEventHandler<HTMLInputElement>;

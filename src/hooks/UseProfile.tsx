@@ -11,29 +11,29 @@ export const useProfile = (query: "id" | "username", id?: string): ProfileResult
     const [result, setResult] = useState<Profile | null>(null);
     const [error, setError] = useState<{ message: string } | null>(null);
 
-    const runPromise = async (id: string) => {
-        setIsLoading(true);
-        const {data, error} =
-            await SupabaseClient.from<Profile>(PROFILES_TABLE)
-                .select("*")
-                .eq(query, id);
-
-        if (error) {
-            setError(error);
-        }
-
-        if (data && data.length) {
-            setResult(data[0]);
-        }
-
-        setIsLoading(false);
-    };
-
     useEffect(() => {
+        const runPromise = async (id: string) => {
+            setIsLoading(true);
+            const {data, error} =
+                await SupabaseClient.from<Profile>(PROFILES_TABLE)
+                    .select("*")
+                    .eq(query, id);
+
+            if (error) {
+                setError(error);
+            }
+
+            if (data && data.length) {
+                setResult(data[0]);
+            }
+
+            setIsLoading(false);
+        };
+
         if (id) {
             runPromise(id).then();
         }
-    }, [id]);
+    }, [query, id]);
 
     return [result, error, isLoading];
 };

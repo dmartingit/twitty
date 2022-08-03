@@ -1,24 +1,24 @@
 import React from "react"
-import { Avatar } from "@material-ui/core";
 import { useQuery } from "react-query";
-import {FetchAvatar} from "../api/Avatar";
+import {fetchAvatar} from "../api/Avatar";
+import {Avatar, SxProps, Theme} from "@mui/material";
 
 
 export type UserAvatarProps = {
     path?: string
     name?: string
-    className?: string
+    sx?: SxProps<Theme>
 }
 
-export const UserAvatar: React.FC<UserAvatarProps> = ({ name, path, className }) => {
+export const UserAvatar: React.FC<UserAvatarProps> = ({ name, path, sx }) => {
     const { data } = useQuery(
         ['avatar', path],
-        FetchAvatar,
+        fetchAvatar,
         {
             enabled: !!path,
             staleTime: 1000 * 60 * 60, // 1 hour
         }
     );
 
-    return <Avatar className={className} alt={name} src={data} />;
+    return <Avatar sx={sx} alt={name} src={data} />;
 };

@@ -1,4 +1,3 @@
-import {makeStyles, Paper, Typography} from "@material-ui/core";
 import React, {useState} from "react";
 import {SupabaseClient} from "../api/SupabaseClient";
 import {ProfileForm, ProfileFormProps} from '../components/ProfileForm';
@@ -11,27 +10,26 @@ import {PageLoading} from "../components/PageLoading";
 import {definitions} from "../api/Types";
 import {UserAvatar} from "../components/UserAvatar";
 import {UploadButton} from "../components/UploadButton";
+import {Paper, Typography} from "@mui/material";
 
-const useStyles = makeStyles(theme => ({
-        paper: {
-            margin: "4em 0 0 0",
-            padding: "6em 0 6em 0",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-        },
-        avatar: {
-            margin: "1.5em 0 1em 0",
-            width: "8em",
-            height: "8em",
-        },
-    })
-);
+const styles = {
+    paper: {
+        marginTop: "5em",
+        padding: "6em 0 6em 0",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
+    avatar: {
+        margin: "1.5em 0 1em 0",
+        width: "8em",
+        height: "8em",
+    },
+};
 
 export type CreateProfilePageProps = {};
 
 export const EditProfilePage: React.FC<CreateProfilePageProps> = () => {
-    const classes = useStyles();
     const {session} = useAuth();
     const [saved, setSaved] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -72,12 +70,13 @@ export const EditProfilePage: React.FC<CreateProfilePageProps> = () => {
     };
 
     return (
-        <Paper variant="outlined" className={classes.paper}>
+        <Paper sx={styles.paper}>
             <Typography variant="h5" align="center">
                 {profile ? "Edit Your Profile" : "Create Your Profile"}
             </Typography>
-            <UserAvatar name={profile?.username || session.user?.email} path={uploadedAvatarUrl || profile?.avatar_url}
-                        className={classes.avatar}/>
+            <UserAvatar name={profile?.username || session.user?.email}
+                        path={uploadedAvatarUrl || profile?.avatar_url}
+                        sx={styles.avatar}/>
             <UploadButton onUpload={onUpload}/>
             <ProfileForm
                 onSubmit={onSubmit}
